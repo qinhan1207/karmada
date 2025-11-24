@@ -21,6 +21,7 @@ import (
 	"github.com/karmada-io/karmada/pkg/scheduler/framework/plugins/clusteraffinity"
 	"github.com/karmada-io/karmada/pkg/scheduler/framework/plugins/clustereviction"
 	"github.com/karmada-io/karmada/pkg/scheduler/framework/plugins/clusterlocality"
+	"github.com/karmada-io/karmada/pkg/scheduler/framework/plugins/globaladvisor"
 	"github.com/karmada-io/karmada/pkg/scheduler/framework/plugins/spreadconstraint"
 	"github.com/karmada-io/karmada/pkg/scheduler/framework/plugins/tainttoleration"
 	"github.com/karmada-io/karmada/pkg/scheduler/framework/runtime"
@@ -35,5 +36,6 @@ func NewInTreeRegistry() runtime.Registry {
 		spreadconstraint.Name: spreadconstraint.New,
 		clusterlocality.Name:  clusterlocality.New,
 		clustereviction.Name:  clustereviction.New,
+		globaladvisor.Name:    globaladvisor.New,
 	}
 }
