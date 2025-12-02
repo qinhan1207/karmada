@@ -194,3 +194,14 @@ go run cmd/scheduler/main.go `
   --health-probe-bind-address=0.0.0.0:10351 `
   --logging-format=text `
   --v=4
+
+启动所有插件
+  go run cmd/scheduler/main.go `
+  --kubeconfig="E:\karmada-config" `
+  --plugins=* `
+  --leader-elect=false `
+  --enable-scheduler-estimator=false `
+  --metrics-bind-address=0.0.0.0:8080 `
+  --health-probe-bind-address=0.0.0.0:10351 `
+  --logging-format=text `
+  --v=4

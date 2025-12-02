@@ -41,8 +41,13 @@ func NewScoreClient(baseURL string, timeout time.Duration, retry int, backoff ti
 }
 
 // GetScore 请求单个集群的评分
-func (c *ScoreClient) GetScore(ctx context.Context, clusterName string) (*ClusterScore, error) {
+// targetCluster: 可选参数，指定希望亲和的目标集群
+func (c *ScoreClient) GetScore(ctx context.Context, clusterName string, targetCluster string) (*ClusterScore, error) {
+	// 构造 URL，如果有 targetCluster，追加参数
 	url := fmt.Sprintf("%s/api/advisor/score?cluster=%s", c.baseURL, clusterName)
+	if targetCluster != "" {
+		url = fmt.Sprintf("%s&target=%s", url, targetCluster)
+	}
 
 	var lastErr error
 	for attempt := 0; attempt <= c.retry; attempt++ {
@@ -54,7 +59,6 @@ func (c *ScoreClient) GetScore(ctx context.Context, clusterName string) (*Cluste
 		resp, err := c.httpClient.Do(req)
 		if err != nil {
 			lastErr = err
-			// 等待重试或取消
 			select {
 			case <-ctx.Done():
 				return nil, ctx.Err()
